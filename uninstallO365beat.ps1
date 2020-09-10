@@ -8,7 +8,7 @@ if($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) 
     Set-ExecutionPolicy Unrestricted
 
     #Change Directory to o365beat
-    Set-Location -Path 'c:\o365beat-master\o365beat'
+    Set-Location -Path 'c:\o365beat-6.5.4\o365beat'
 
     #Stops o365beat from running
     Stop-Service -Force o365beat
@@ -21,7 +21,7 @@ if($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) 
 
     "`nUninstalling O365beat Now..."
 
-    $Target = "C:\o365beat-master"
+    $Target = "C:\o365beat-6.5.4"
 
     Get-ChildItem -Path $Target -Recurse -force |
         Where-Object { -not ($_.pscontainer)} |

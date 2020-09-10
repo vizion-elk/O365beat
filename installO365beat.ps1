@@ -7,7 +7,7 @@ $principal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.
 if($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     "`nYou are running Powershell with full privilege`n"
 
-    Set-Location -Path 'c:\o365beat-master\o365beat'
+    Set-Location -Path 'c:\o365beat-6.5.4\o365beat'
     Set-ExecutionPolicy Unrestricted
     
     "O365beat Execution policy set - Success`n"
