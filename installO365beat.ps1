@@ -7,7 +7,16 @@ $principal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.
 if($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     "`nYou are running Powershell with full privilege`n"
 
-    Set-Location -Path 'c:\o365beat-7.7.0\o365beat'
+    $currentLocation = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+    If ( -Not (Test-Path -Path "$currentLocation\o365beat-master\o365beat"))
+    {
+        Write-Host -Object "Path $currentLocation\o365beat-master\o365beat does not exit, exiting..." -ForegroundColor Red
+        Exit 1
+    }
+    Else 
+    {
+        Set-Location -Path "$currentLocation\o365beat-master\o365beat"
+    }
     Set-ExecutionPolicy Unrestricted
     
     "O365beat Execution policy set - Success`n"
@@ -251,7 +260,8 @@ if($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) 
 
     "`nTesting Configuration...`n"
 
-    .\o365beat.exe -e -configtest
+    .\o365beat.exe -e test config
+	.\o365beat.exe test output
 
     .\o365beat.exe setup --dashboards
 
@@ -264,7 +274,7 @@ if($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) 
     "`nO365beat Started. Check Kibana For The Incoming Data!"
 
     #Close Powershell window
-    Stop-Process -Id $PID
+    #Stop-Process -Id $PID
 }
 else {
     Start-Process -FilePath "powershell" -ArgumentList "$('-File ""')$(Get-Location)$('\')$($MyInvocation.MyCommand.Name)$('""')" -Verb runAs
