@@ -121,7 +121,7 @@ if($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) 
 
     #Opens Up YML and sets Password
     (Get-Content o365beat.yml) |       
-        ForEach-Object {$_ -Replace 'password: ""', "password: ""$($objTextBox3.Text)""" } |
+        ForEach-Object {$_ -Replace 'password: ""', "password: ""$($objTextBox3.Text)""`n  ssl.verification_mode: none" } |
             Set-Content o365beat.yml
 
     #Opens up YML o365 and inserts Elasticsearch API Endpoint
@@ -251,7 +251,7 @@ if($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) 
 
     "`nTesting Configuration...`n"
 
-    .\o365beat.exe -e -configtest
+    .\o365beat.exe -e test config
 
     .\o365beat.exe setup --dashboards
 
